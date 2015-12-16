@@ -106,7 +106,19 @@ There is not a significant change in the estimates as a result of imputing missi
 
 # Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
+allweekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+filled.activityData$dayofweek <- weekdays(filled.activityData$date, FALSE)
+filled.activityData$dayofweek <- factor((filled.activityData$dayofweek %in% allweekdays), 
+                                        levels = c(FALSE, TRUE), labels = c("weekday", "weekend"))
 
+par(mfrow = c(2,1))
+
+onlyweekend <- filled.activityData[filled.activityData$dayofweek == "weekend", ]
+
+plot(filled.activityData[filled.activityData$dayofweek == "weekend", 3], filled.activityData$steps,
+     main = "", xlab = "Interval", ylab = "Number of steps", col = "red")
+plot(filled.activityData[filled.activityData$dayofweek == "weekday", 3], filled.activityData$steps,
+     main = "", xlab = "Interval", ylab = "Number of steps", col = "blue")
 
 
 ```
